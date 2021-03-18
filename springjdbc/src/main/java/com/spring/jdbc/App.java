@@ -3,8 +3,11 @@ package com.spring.jdbc;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.spring.jdbc.dao.JdbcConfig;
 import com.spring.jdbc.dao.StudentDao;
 import com.spring.jdbc.entities.Student;
 
@@ -16,7 +19,12 @@ public class App {
 
 	public static void main(String[] args) {
 		System.out.println("program started");
-		ApplicationContext context = new ClassPathXmlApplicationContext("com/spring/jdbc/config.xml");
+
+//		ApplicationContext context = new ClassPathXmlApplicationContext("com/spring/jdbc/config.xml");
+
+//		this is for without xml file
+		AbstractApplicationContext context = new AnnotationConfigApplicationContext(JdbcConfig.class);
+
 		StudentDao studentDao = context.getBean("studentDao", StudentDao.class);
 
 //		--------------------------------------------------------------------
@@ -65,6 +73,8 @@ public class App {
 //			Student student = (Student) iterator.next();
 //			System.out.println(student);
 //		}
+
+		context.close();
 
 	}
 }
